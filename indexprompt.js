@@ -1,3 +1,5 @@
+//InsertAt needs fixed, possible because of 'Count' not implemented
+
 //Metadata (modules)
 const prompt = require('prompt-sync')();
 
@@ -24,13 +26,122 @@ class ToDoList
         
     }
 
-    addItemToList(data, prio, description)
+    insertItemFirst(data, prio, description)
     {
         this.head = new ToDoItem (data, prio, description, this.head);
         this.date = new Date();
         
     }
 
+    insertItemLast(data, prio, description)
+    {
+        let node = new ToDoItem (data, prio, description)
+        let current;
+
+        //If empty, make head:
+        if(!this.head)
+        {
+            this.head = node;
+        }
+        else
+        {
+            current = this.head;
+
+            while(current.next)
+            {
+                current = current.next;
+            }
+
+            current.next = node;
+        }
+
+        this.size++;
+    }
+
+    insertItemAt(data, prio, description, index)
+    {
+        // If index is out of range:
+        if(index > 0 && index > this.size)
+        {
+            return;
+        }
+
+        // If first index
+        if(index == 0) 
+        {
+            this.head = new ToDoItem(data, prio, description, this.head);
+            this.date = new Date();
+            return;
+        }
+
+        const node = new ToDoItem(data, prio, description, this.head);
+        this.date = new Date();
+        let current, previous;
+
+        // Set current to first
+        current = this.head;
+        let count = 0;
+
+        while(count < index)
+        {
+            previous = current; // Node before index
+            count++;
+            current = current.next; // Node after index
+        }
+
+        node.next = current;
+        previous.next = node;
+
+        this.size++;
+    }
+
+    getItemValueAt(index)
+    {
+        let current = this.head;
+        let count = 0;
+
+        while(current)
+        {
+            if(count == index)
+            {
+                console.log(current.data);
+            }
+            count++;
+            current = current.next;
+        }
+
+        return null;
+    }
+
+    removeAt(index)
+    {
+        if(index > 0 && index > this.size)
+        {
+            return;
+        }
+
+        let current = this.head;
+        let previous;
+        let count = 0;
+
+        // Remove first
+        if(index === 0)
+        {
+            this.head = current.next;
+        }
+        else 
+        {
+            while(count < index)
+            {
+                count++;
+                previous = current;
+                current = current.next;
+            }
+
+            previous.next = current.next;
+        }
+        this.size--;
+    }   
     printListData()
     {
         let current = this.head;
@@ -80,7 +191,23 @@ const boolean = function()
 let first = new ToDoItem();
 let items = new ToDoList();
 
-getUserInput();
+const linkedList = new ToDoList;
+
+//Not sure if I need 'this.head' on line 77
+
+//InsertAt needs fixed, possible because of 'Count' not implemented
+
+linkedList.insertItemLast('Go to Jim', 1, 'Pump it');
+linkedList.insertItemLast('Eat food', 1, 'Cook it');
+linkedList.insertItemLast('Cardio', 1, 'Walk it');
+linkedList.insertItemLast('Leet Code', 1, 'Grind it');
+linkedList.insertItemLast('Projects', 1, 'Build it');
+linkedList.insertItemLast('Dinner', 1, 'Eat it');
+
+console.log(linkedList);
+
+
+
 
 
 
