@@ -1,4 +1,4 @@
-//InsertAt needs fixed, possible because of 'Count' not implemented
+
 
 //Metadata (modules)
 const prompt = require('prompt-sync')();
@@ -13,6 +13,7 @@ class ToDoItem
         this.description = description;
         this.next = next;
     }
+    
 
 };
 
@@ -95,10 +96,46 @@ class ToDoList
         this.size++;
     }
 
+    sortListByPrio()
+    {
+        let count = 1;
+        let current = this.head;
+        let previous = this.head;
+        let daisyChain;
+
+        while (count < 4)
+            {
+                console.log("Data type of current.prio: " + typeof(current.priorityLevel));
+                console.log("Data type of count: " + typeof(count));
+                console.log(current.priorityLevel + ' ' + count)
+            if (current.priorityLevel !== count)
+            {
+                previous = current;
+                current = current.next;
+            }
+            if (current.priorityLevel == count && current.next !== null)
+            {
+                previous.next = this.next;
+                previous = current;
+                daisyChain = current;
+                current = current.next;
+            }
+            if (current.priorityLevel == count && current.next == null)
+            {
+                this.next = daisyChain;
+                count++;
+            }
+            }
+            this.printListData();
+    }
+
     getItemValueAt(index)
     {
         let current = this.head;
         let count = 0;
+
+        
+        
 
         while(current)
         {
@@ -142,14 +179,36 @@ class ToDoList
         }
         this.size--;
     }   
-    printListData()
+   
+    getItemFullDataAtIndex(index)
     {
+        
         let current = this.head;
+        let count = 0;
 
         while(current)
         {
-        console.log(current.data);
+            if(count == index - 1)
+            {
+                console.log(`Data: ${current.data}, Priority Level: ${current.priorityLevel}, Description: ${current.description}, Next Node: ${current.next}`);
+            }
+            count++;
+            current = current.next;
+        }
+
+        return;
+    }
+
+    printListData()
+    {
+        let current = this.head;
+        let indexNumber = 1;
+        while(current)
+        {
+        console.log(`${indexNumber}. ` + current.data);
         current = current.next;
+        indexNumber++;
+        
         }
     }
 
@@ -203,8 +262,22 @@ linkedList.insertItemLast('Cardio', 1, 'Walk it');
 linkedList.insertItemLast('Leet Code', 1, 'Grind it');
 linkedList.insertItemLast('Projects', 1, 'Build it');
 linkedList.insertItemLast('Dinner', 1, 'Eat it');
+linkedList.insertItemAt('Random', 2, 'Who cares', 6);
 
-console.log(linkedList);
+linkedList.printListData();
+
+linkedList.sortListByPrio();
+
+
+
+
+
+
+
+
+
+
+
 
 
 
