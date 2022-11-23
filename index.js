@@ -27,6 +27,8 @@ class ToDoList
         
     }
 
+   
+
     printListData()
     {
         let current = this.head;
@@ -45,9 +47,10 @@ class ToDoList
     }
 };
 
+
+//HTML Crap
+
 let button = document.querySelector('.submit');
-
-
 let element = document.createElement('li');
 let list = document.querySelector('.list');
 
@@ -59,9 +62,8 @@ button.addEventListener('click', () =>
     
 })
 
-
-
 function createMenuItem(input) {
     let li = document.createElement('li');
     li.textContent = input;
 }
+
