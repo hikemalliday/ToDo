@@ -105,27 +105,48 @@ class ToDoList
 
         while (count < 4)
             {
-                console.log("Data type of current.prio: " + typeof(current.priorityLevel));
-                console.log("Data type of count: " + typeof(count));
-                console.log(current.priorityLevel + ' ' + count)
+                
+                
             if (current.priorityLevel !== count)
-            {
+                {
                 previous = current;
                 current = current.next;
-            }
+                console.log("Current prio level: " + current.priorityLevel + ' Count:' + count)
+                }
             if (current.priorityLevel == count && current.next !== null)
-            {
-                previous.next = this.next;
+                {
+                previous.next = current.next;
+                console.log("Unorphaning" + "prev.next = " + previous.next + "current.next: " + current.next)
                 previous = current;
                 daisyChain = current;
                 current = current.next;
-            }
+                }
             if (current.priorityLevel == count && current.next == null)
-            {
-                this.next = daisyChain;
+                {
+                current.next = daisyChain;
                 count++;
+                }
+            if (current.priorityLevel > count)
+                {
+                count = current.priorityLevel;
+                
+                
+                if (current.priorityLevel == count && current.next !== null)
+                {
+                previous.next = current.next;
+                console.log("Unorphaning" + "prev.next = " + previous.next + "current.next: " + current.next)
+                previous = current;
+                daisyChain = current;
+                current = current.next;
+                }
+
+            if (current.priorityLevel == count && current.next == null)
+                {
+                current.next = daisyChain;
+                count++;
+                }
             }
-            }
+        }  
             this.printListData();
     }
 
@@ -256,13 +277,13 @@ const linkedList = new ToDoList;
 
 //InsertAt needs fixed, possible because of 'Count' not implemented
 
-linkedList.insertItemLast('Go to Jim', 1, 'Pump it');
-linkedList.insertItemLast('Eat food', 1, 'Cook it');
+linkedList.insertItemLast('Go to Jim', 2, 'Pump it');
+linkedList.insertItemLast('Eat food', 3, 'Cook it');
 linkedList.insertItemLast('Cardio', 1, 'Walk it');
-linkedList.insertItemLast('Leet Code', 1, 'Grind it');
-linkedList.insertItemLast('Projects', 1, 'Build it');
+linkedList.insertItemLast('Leet Code', 2, 'Grind it');
+linkedList.insertItemLast('Projects', 3, 'Build it');
 linkedList.insertItemLast('Dinner', 1, 'Eat it');
-linkedList.insertItemAt('Random', 2, 'Who cares', 6);
+
 
 linkedList.printListData();
 
